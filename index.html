@@ -58,6 +58,20 @@
     .footer-word{color:#6B2717}
     @media(max-width:720px){.shared-map{margin-top:39px;padding:23px 19px;gap:13px;flex-wrap:wrap}.shared-map-graphic{width:49px;height:49px}.shared-map-graphic svg{width:22px;height:22px}.shared-map-copy{flex-basis:calc(100% - 70px)}.shared-map h2{font-size:20px}.shared-map-button{width:100%;justify-content:center;margin-top:3px}.hero-actions{gap:9px}.primary,.secondary-map{padding:14px 15px;font-size:12px}}
     @media(max-width:370px){.hero-actions>a{flex:1 1 100%}}
+
+    /* 每日自由備註（各裝置獨立保存） */
+    .trip-notes{padding:24px 32px 28px;background:#F6EFE4;border-top:1px solid #CCB697}
+    .trip-notes-header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+    .trip-notes-title{font:600 19px/1.5 var(--fontSerif);color:#442C1B;margin:0}
+    .trip-notes-status{font-size:11px;color:#6B2717}
+    .trip-notes-textarea{width:100%;min-height:126px;padding:14px 15px;background:#FFFBF4;border:1px solid #BCA689;border-radius:9px;resize:vertical;color:#442C1B;font:13px/1.9 var(--fontSans);box-sizing:border-box}
+    .trip-notes-textarea::placeholder{color:#877461;opacity:1}
+    .trip-notes-textarea:focus{outline:2px solid #CC9E4C;outline-offset:2px;border-color:#6B2717}
+    .trip-notes-footer{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:12px;flex-wrap:wrap}
+    .trip-notes-help{color:#6C5945;font-size:11px;line-height:1.6;flex:1 1 180px}
+    .trip-notes-copy{border:1px solid #6B2717;border-radius:6px;background:#6B2717;color:#FFF8EE;padding:10px 16px;font:700 12px var(--fontSans);cursor:pointer}
+    .trip-notes-copy:hover,.trip-notes-copy:focus-visible{background:#442C1B}
+    @media(max-width:720px){.trip-notes{padding:21px 19px 24px}.trip-notes-footer{align-items:flex-start}.trip-notes-copy{width:100%}}
   </style>
 </head>
 <body>
@@ -148,7 +162,27 @@
         const map=e.map ? `<a class="map-link" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="在 Naver Map 搜尋 ${sanitize(e.title)}">${mapSvg} Naver Map</a>`:'';
         return `<div class="event"><div class="event-time">${sanitize(e.time)}</div><div class="event-node" aria-hidden="true"></div><div class="event-details"><div><h4 class="event-title">${sanitize(e.title)}</h4><div class="event-info">${sanitize(e.detail)}</div>${e.caution?`<span class="event-note">${sanitize(e.caution)}</span>`:''}</div>${map}</div></div>`
       }).join('');
-      panel.innerHTML=`<div class="day-header"><div class="day-heading"><div class="day-count">DAY 0${i+1} · ${sanitize(day.subtitle).toUpperCase()}</div><h3>${sanitize(day.name)}</h3><p>${sanitize(day.summary)}</p></div><div class="day-date">${sanitize(day.date)}<span>${sanitize(day.weekday)}</span></div></div><div class="events">${events}</div><div class="tip"><span class="tip-icon">✳</span><p>今日提醒：${i===4?'15:30 水原出發，須先回合井領行李；預計 18:00 抵達機場，請依當天路況機動調整。':i===2?'A／B 交通方案擇一；後苑門票、Lalamove 配送及新住宿代收都需事先確認。':i===1?'賞楓、銀杏實際狀況依天氣與落葉進度而定。':'各站實際時間可依現場狀況彈性調整，祝旅途愉快！'}</p></div>`;
+      panel.innerHTML=`<div class="day-header"><div class="day-heading"><div class="day-count">DAY 0${i+1} · ${sanitize(day.subtitle).toUpperCase()}</div><h3>${sanitize(day.name)}</h3><p>${sanitize(day.summary)}</p></div><div class="day-date">${sanitize(day.date)}<span>${sanitize(day.weekday)}</span></div></div><div class="events">${events}</div><section class="trip-notes" aria-label="每日自由備註"><div class="trip-notes-header"><h4 class="trip-notes-title">✎ 今日自由備註</h4><span class="trip-notes-status" id="trip-notes-status" aria-live="polite">僅儲存在目前裝置</span></div><label for="trip-notes-input" class="trip-notes-help">想吃的餐廳、想逛的店，或臨時想到的提醒，都可以寫在這裡。</label><textarea id="trip-notes-input" class="trip-notes-textarea" rows="4" placeholder="例如：想買的伴手禮、推薦的店、集合提醒…"></textarea><div class="trip-notes-footer"><span class="trip-notes-help">每一天的備註獨立保存；其他旅伴不會自動看到。可複製後分享至群組。</span><button id="trip-notes-copy" class="trip-notes-copy" type="button">複製備註</button></div></section><div class="tip"><span class="tip-icon">✳</span><p>今日提醒：${i===4?'15:30 水原出發，須先回合井領行李；預計 18:00 抵達機場，請依當天路況機動調整。':i===2?'A／B 交通方案擇一；後苑門票、Lalamove 配送及新住宿代收都需事先確認。':i===1?'賞楓、銀杏實際狀況依天氣與落葉進度而定。':'各站實際時間可依現場狀況彈性調整，祝旅途愉快！'}</p></div>`;
+      const notesInput=panel.querySelector('#trip-notes-input');
+      const notesStatus=panel.querySelector('#trip-notes-status');
+      const copyNotes=panel.querySelector('#trip-notes-copy');
+      const notesKey='seoul-autumn-day-notes-v1-'+i;
+      try { notesInput.value=localStorage.getItem(notesKey)||''; }
+      catch(error) { notesStatus.textContent='目前無法自動保存'; }
+      notesInput.addEventListener('input',()=>{
+        try { localStorage.setItem(notesKey,notesInput.value); notesStatus.textContent='已儲存在這台裝置'; }
+        catch(error) { notesStatus.textContent='無法自動保存，請複製備註'; }
+      });
+      copyNotes.addEventListener('click',async()=>{
+        const content=notesInput.value.trim();
+        if(!content){notesStatus.textContent='先寫一些備註再複製喔';return;}
+        try {
+          await navigator.clipboard.writeText('DAY '+(i+1)+' · '+day.date+' 自由備註\n'+content);
+          notesStatus.textContent='已複製，可以貼到群組';
+        } catch(error) {
+          notesInput.focus(); notesInput.select(); notesStatus.textContent='請長按選取文字複製';
+        }
+      });
       try{history.replaceState(null,'',location.pathname+location.search+'#day-'+(i+1));}catch(e){}
     }
     DAYS.forEach((d,i)=>{
