@@ -280,7 +280,7 @@
         const namedRestaurant=isFood && /남영동양문/.test(e.map||'');
         const useSharedFoodList=isFood && !e.placeUrl && !namedRestaurant;
         const url=e.placeUrl || (useSharedFoodList ? 'https://naver.me/GEdGFSLw' : (e.map ? 'https://map.naver.com/p/search/'+encodeURIComponent(e.map) : ''));
-        const label=e.placeUrl ? (e.placeNote||'餐廳地點') : useSharedFoodList ? '共用美食地圖' : namedRestaurant ? '搜尋餐廳' : 'Naver Map';
+        const label=e.placeUrl ? (e.placeNote || (isFood ? '餐廳地點' : e.icon==='flower' ? '醫美地點' : e.icon==='sun' ? '體驗地點' : (e.icon==='leaf'||e.icon==='shop') ? '景點地圖' : '查看地點')) : useSharedFoodList ? '共用美食地圖' : namedRestaurant ? '搜尋餐廳' : 'Naver Map';
         const map=url ? `<a class="map-link" href="${sanitize(url)}" target="_blank" rel="noopener noreferrer" aria-label="${sanitize(e.title)}：${sanitize(label)}">${mapSvg} ${sanitize(label)}</a>`:'';
         return `<div class="event"><div class="event-time">${sanitize(e.time)}</div><div class="event-node" aria-hidden="true"></div><div class="event-details"><div><h4 class="event-title">${sanitize(e.title)}</h4><div class="event-info">${sanitize(e.detail)}</div>${e.caution?`<span class="event-note">${sanitize(e.caution)}</span>`:''}</div>${map}</div></div>`
       }).join('');
