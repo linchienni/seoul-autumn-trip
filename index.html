@@ -169,12 +169,13 @@
     /* Keep longer travel-agency-style titles readable in the day tabs */
     .day-nav .day-tab:not(.overview-tab) .tab-label{white-space:normal;overflow:visible;text-overflow:clip;min-height:2.9em;word-break:break-word}
   </style>
+  <link rel="stylesheet" href="weather.css" />
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
   <header class="container masthead" id="top">
     <a class="brand" href="#top" aria-label="返回首頁"><span class="brand-symbol" aria-hidden="true">✿</span><span>YINGGE SISTERS <span style="font-weight:400;color:#376FA0">/</span> 2026</span></a>
-    <nav class="links" aria-label="網站導覽"><a href="#itinerary">每日行程</a><a href="#shared-map">景點地圖</a><a href="#travel-info">行前資訊</a><span class="top-chip">NOV 12 — 16, SEOUL</span></nav>
+    <nav class="links" aria-label="網站導覽"><a href="#weekly-weather">一週天氣</a><a href="#itinerary">每日行程</a><a href="#shared-map">景點地圖</a><a href="#travel-info">行前資訊</a><span class="top-chip">NOV 12 — 16, SEOUL</span></nav>
   </header>
   <main>
     <section class="hero container" aria-labelledby="trip-title">
@@ -214,6 +215,28 @@
             <text x="47" y="452" fill="#F8FBFD" font-family="Georgia,serif" font-size="17" font-style="italic" letter-spacing="2">autumn memories</text>
           </svg>
         </div><div class="art-bottom"><strong>Seoul '26</strong><span>collecting moments 🍁</span></div>
+      </div>
+    </section>
+
+    <section class="weekly-weather container" id="weekly-weather" aria-labelledby="weekly-weather-title">
+      <div class="weekly-weather-head">
+        <div>
+          <div class="weekly-weather-kicker">SEOUL SKY / 7-DAY FORECAST ✳</div>
+          <h2 class="weekly-weather-title" id="weekly-weather-title">首爾的一週天氣 ☁️</h2>
+          <p class="weekly-weather-description">出發前看一眼天氣，把陽光與金秋一起收進行李箱。</p>
+        </div>
+        <div class="weekly-weather-actions">
+          <span class="weekly-weather-status" id="weekly-weather-status" role="status" aria-live="polite">正在取得最新預報…</span>
+          <button class="weekly-weather-refresh" id="weekly-weather-refresh" type="button">↻ 更新預報</button>
+        </div>
+      </div>
+      <div class="weekly-weather-days" id="weekly-weather-days" role="list" aria-label="首爾未來七天天氣預報">
+        <div class="weekly-weather-empty" role="listitem">正在載入首爾最新的七天天氣預報…</div>
+      </div>
+      <p class="weekly-weather-swipe">← 左右滑動，可以看完整七天 →</p>
+      <div class="weekly-weather-bottom">
+        <span>首爾市區每日最高／最低溫（°C）與當日最高降雨機率。實際天氣以當日為準。</span>
+        <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">天氣資料：Open-Meteo ↗</a>
       </div>
     </section>
     <div class="ticker"><div class="ticker-inner container"><span>✧ FIVE DAYS, ONE BEAUTIFUL MEMORY</span><span><i>✳</i>　Take it slow, take it all in　<i>✳</i></span><span>서울 · 수원 · 2026</span></div></div>
@@ -322,4 +345,5 @@
     });
     const match=location.hash.match(/^#day-([1-5])$/);if(match)renderDay(Number(match[1])-1);else renderOverview();
   </script>
+  <script src="weather.js"></script>
 </body></html>
