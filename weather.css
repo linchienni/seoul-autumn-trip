@@ -1,0 +1,46 @@
+/* Seoul weekly weather / Korean sky blue + warm autumn gold */
+.weekly-weather{margin:0 auto 52px;padding:28px 29px 22px;border:1px solid #BBD9EB;border-radius:20px;background:linear-gradient(115deg,rgba(255,255,255,.98),rgba(237,248,255,.98) 68%,rgba(255,250,239,.97));box-shadow:0 15px 40px rgba(61,112,149,.09)}
+.weekly-weather-head{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:19px}
+.weekly-weather-kicker{font-size:10px;letter-spacing:.21em;color:#447FA9;font-weight:700}
+.weekly-weather-title{font:600 clamp(22px,2.4vw,29px)/1.4 var(--fontSerif);margin:8px 0 6px;color:#294E6B}
+.weekly-weather-description{font-size:12px;line-height:1.8;color:#637D92;margin:0}
+.weekly-weather-actions{display:flex;align-items:flex-end;flex-direction:column;gap:10px;flex:none}
+.weekly-weather-status{font-size:10px;color:#64839A;line-height:1.6;text-align:right}
+.weekly-weather-refresh{border:1px solid #A9CFE5;border-radius:100px;color:#3478A8;background:#F2FAFF;cursor:pointer;font-size:11px;font-weight:700;padding:8px 13px;transition:background .2s}
+.weekly-weather-refresh:hover{background:#DFF0FA}
+.weekly-weather-refresh:disabled{cursor:wait;opacity:.58}
+.weekly-weather-refresh:focus-visible{outline:3px solid #E8B861;outline-offset:2px}
+.weekly-weather-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+.weekly-weather-day{background:#FFF;border:1px solid #D4E6F1;border-radius:14px;padding:14px 10px 15px;text-align:center;min-width:0}
+.weekly-weather-day.is-trip{background:linear-gradient(180deg,#FFF9ED,#FFFFFF 85%);border-color:#E9D8B1}
+.weekly-weather-day.is-today{border-color:#7CB1D4;background:#EEF8FE;box-shadow:0 3px 13px rgba(71,126,166,.09)}
+.weekly-weather-date{font-size:13px;color:#355C79;font-weight:700;line-height:1.5}
+.weekly-weather-weekday{font-size:10px;color:#839BAF;margin-top:2px}
+.weekly-weather-trip{font-size:9px;color:#996F2F;margin-top:5px;font-weight:700}
+.weekly-weather-icon{font-size:32px;line-height:1.25;margin:12px 0 6px;min-height:41px}
+.weekly-weather-condition{font-size:11px;color:#58768F;min-height:2.8em;line-height:1.5;display:flex;align-items:center;justify-content:center}
+.weekly-weather-temperatures{white-space:nowrap;margin:11px 0 8px}
+.weekly-weather-temperatures strong{font-size:20px;color:#2D638C;font-weight:700}
+.weekly-weather-temperatures span{font-size:13px;color:#86A0B4;margin-left:5px}
+.weekly-weather-rain{font-size:10px;color:#4F83A7;background:#EFF7FC;border-radius:100px;padding:5px 6px;display:inline-block}
+.weekly-weather-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid #DDEAF2;padding-top:14px;margin-top:17px}
+.weekly-weather-bottom span{font-size:10px;line-height:1.7;color:#7C92A2}
+.weekly-weather-bottom a{font-size:10px;line-height:1.5;color:#376FA0;text-decoration:underline;text-underline-offset:3px}
+.weekly-weather-empty{grid-column:1/-1;text-align:center;padding:32px 12px;font-size:12px;color:#667F93;background:#F3F9FD;border:1px dashed #C0D9E8;border-radius:12px;line-height:1.8}
+.weekly-weather-swipe{display:none;font-size:10px;color:#7F9AAC;margin:12px 0 0;text-align:center}
+@media(max-width:960px){
+  .weekly-weather-days{grid-template-columns:repeat(7,minmax(125px,1fr));overflow-x:auto;padding-bottom:10px;scroll-snap-type:x proximity;scrollbar-color:#C4DCEB transparent;scrollbar-width:thin}
+  .weekly-weather-day{scroll-snap-align:start}
+  .weekly-weather-swipe{display:block}
+}
+@media(max-width:720px){
+  .weekly-weather{margin-bottom:33px;padding:23px 16px 17px;border-radius:16px}
+  .weekly-weather-head{display:block}
+  .weekly-weather-title{font-size:24px}
+  .weekly-weather-actions{flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-top:12px}
+  .weekly-weather-status{text-align:left}
+  .weekly-weather-days{grid-template-columns:repeat(7,124px);gap:9px}
+  .weekly-weather-day{padding:12px 9px}
+  .weekly-weather-icon{font-size:29px}
+  .weekly-weather-temperatures strong{font-size:19px}
+}
